@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Richness Checker</title>
+    </head>
+
+    <body>
+        <h1>Are you richer than yesterday?</h1>
+
+        <form method="POST">
+
+            <label for="name">Your currency code: </label>
+            <input  type="text"
+                    th:placeholder="${errorMessage} != null ? ${errorMessage} : 'USD'"
+                    name="currency"/>
+
+            <input type="submit" value="Check it!"/>
+
+        </form>
+    </body>
+</html>
