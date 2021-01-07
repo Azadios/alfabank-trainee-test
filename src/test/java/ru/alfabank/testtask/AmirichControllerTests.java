@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import io.restassured.RestAssured;
-import lombok.SneakyThrows;
 import ru.alfabank.testtask.services.forex.ForexService;
 import ru.alfabank.testtask.services.gifsource.GifService;
 
@@ -82,8 +81,7 @@ public class AmirichControllerTests {
         }
 
         @Test
-        @SneakyThrows
-        void containsMessageOfExceptionFromIsHigherThanYesterday() {
+        void containsMessageOfExceptionFromIsHigherThanYesterday() throws Exception {
             final String exceptionMessage = "Some exception message";
 
             Mockito.when(forex.isHigherThanYesterday(CURRENCY_TO_CHECK))
@@ -96,7 +94,6 @@ public class AmirichControllerTests {
         }
 
         @Test
-        @SneakyThrows
         void containsMessageOfExceptionFromGetBrokeGifUrl() {
             final String exceptionMessage = "Some exception message";
 
@@ -111,7 +108,6 @@ public class AmirichControllerTests {
         }
 
         @Test
-        @SneakyThrows
         void containsMessageOfExceptionFromGetRichGifUrl() {
             final String exceptionMessage = "Some exception message";
 
