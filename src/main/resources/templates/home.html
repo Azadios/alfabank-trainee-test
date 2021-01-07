@@ -10,8 +10,10 @@
 
         <form method="POST">
 
-            <label for="name">Currency code: </label>
-            <input type="text" name="currency"/>
+            <label for="name">Your currency code: </label>
+            <input  type="text"
+                    th:placeholder="${errorMessage} != null ? ${errorMessage} : 'USD'"
+                    name="currency"/>
 
             <input type="submit" value="Check it!"/>
 
