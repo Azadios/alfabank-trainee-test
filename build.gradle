@@ -8,12 +8,6 @@ group = 'ru.alfabank'
 version = '1.0.0'
 sourceCompatibility = '14'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
@@ -39,6 +33,6 @@ dependencyManagement {
 }
 
 test {
-	forkEvery = 1
+	exclude 'ru/alfabank/testtask/controllers/**'
 	useJUnitPlatform()
 }
