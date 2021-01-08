@@ -4,8 +4,8 @@ public class GifServiceException extends RuntimeException {
 
     static final long serialVersionUID = 1L;
 
-    public GifServiceException(String message) {
-        super(message);
+    public GifServiceException() {
+        super("Sorry, there's issue with gif source");
     }
 
 }

@@ -15,6 +15,6 @@ public interface ForexServiceProxy {
     public String getRateAndBaseAtDateAsJson (
         @PathVariable("currencyToCheck") String currencyToCheck,
         @PathVariable("date") String date
-    ) throws Exception;
+    );
 
 }

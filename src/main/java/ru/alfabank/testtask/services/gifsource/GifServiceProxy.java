@@ -11,7 +11,6 @@ public interface GifServiceProxy {
                         "?api_key=${services.gif_source.api_key}" +
                         "&tag={tag}" +
                         "&rating=g")
-    public String getJsonWithRandomGifByTag(@PathVariable("tag") String tag)
-        throws Exception;
+    public String getJsonWithRandomGifByTag(@PathVariable("tag") String tag);
 
 }
