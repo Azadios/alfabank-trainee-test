@@ -26,15 +26,17 @@ public class ForexServiceAdapter {
         if (date.isAfter(LocalDate.now()))
             throw new BadDate("Sorry, can't predict currencies");
 
+        String ratesJson;
         try {
-            String ratesJson = forexProxy.getRateAndBaseAtDateAsJson(
+            ratesJson = forexProxy.getRateAndBaseAtDateAsJson(
                 currencyToCheck, date.toString());
 
-            return getRateFromNode(getRatesNode(ratesJson), currencyToCheck);
         }
         catch (Exception e) {
             throw new BadResultFromForex();
         }
+
+        return getRateFromNode(getRatesNode(ratesJson), currencyToCheck);
     }
 
     private Double getRateFromNode(JsonNode ratesNode, String currencyToCheck)
