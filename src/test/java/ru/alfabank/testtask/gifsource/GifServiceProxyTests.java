@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,7 +17,6 @@ public class GifServiceProxyTests {
     GifServiceProxy gifSource;
 
     @Nested
-    @TestInstance(Lifecycle.PER_CLASS)
     class GetJsonWithRandomGifByTag {
 
         @Test

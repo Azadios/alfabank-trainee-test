@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
@@ -59,37 +60,42 @@ public class ForexServiceAdapterTests {
         }
     }
 
-    @Test
-    void getRateAtShouldReturnCorrectRate() throws Exception {
-        setProxyRespond(CURRENCY_TO_CHECK, DAY, jsonWithRates);
-        assertEquals(CURRENCY_RATE, forexAdapter.getRateAt(CURRENCY_TO_CHECK, DAY));
-    }
+    @Nested
+    class GetRateAt {
 
-    @ParameterizedTest
-    @NullSource
-    @ValueSource(strings = {"", "weird rates", "{\"rates\":}"})
-    void getRateAtShouldThrowOnWrongJson(String responseJson) {
-        setProxyRespond(CURRENCY_TO_CHECK, DAY, responseJson);
-        assertThrows(ForexException.BadResultFromForex.class,
-            () -> forexAdapter.getRateAt(CURRENCY_TO_CHECK, DAY));
-    }
+        @Test
+        void returnCorrectRate() throws Exception {
+            setProxyRespond(CURRENCY_TO_CHECK, DAY, jsonWithRates);
+            assertEquals(CURRENCY_RATE, forexAdapter.getRateAt(CURRENCY_TO_CHECK, DAY));
+        }
 
-    @Test
-    void getRateAtShouldThrowOnFutureDayRate() {
-        LocalDate futureDay = LocalDate.now().plusDays(2);
+        @ParameterizedTest
+        @NullSource
+        @ValueSource(strings = {"", "weird rates", "{\"rates\":}"})
+        void throwOnWrongJson(String responseJson) {
+            setProxyRespond(CURRENCY_TO_CHECK, DAY, responseJson);
+            assertThrows(ForexException.BadResultFromForex.class,
+                () -> forexAdapter.getRateAt(CURRENCY_TO_CHECK, DAY));
+        }
 
-        setProxyRespond(CURRENCY_TO_CHECK, futureDay, jsonWithRates);
-        assertThrows(ForexException.BadDate.class,
-            () -> forexAdapter.getRateAt(CURRENCY_TO_CHECK, futureDay));
-    }
+        @Test
+        void throwOnFutureDayRate() {
+            LocalDate futureDay = LocalDate.now().plusDays(2);
 
-    @Test
-    void getRateAtShouldThrowOnBadCurrencyCode() {
-        final String badCurrency = "NON";
+            setProxyRespond(CURRENCY_TO_CHECK, futureDay, jsonWithRates);
+            assertThrows(ForexException.BadDate.class,
+                () -> forexAdapter.getRateAt(CURRENCY_TO_CHECK, futureDay));
+        }
 
-        setProxyRespond(badCurrency, DAY, jsonWithRates);
-        assertThrows(ForexException.BadCurrencyCode.class,
-            () -> forexAdapter.getRateAt(badCurrency, DAY));
+        @Test
+        void throwOnBadCurrencyCode() {
+            final String badCurrency = "NON";
+
+            setProxyRespond(badCurrency, DAY, jsonWithRates);
+            assertThrows(ForexException.BadCurrencyCode.class,
+                () -> forexAdapter.getRateAt(badCurrency, DAY));
+        }
+
     }
 
 }

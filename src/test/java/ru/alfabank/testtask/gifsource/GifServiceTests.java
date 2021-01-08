@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +29,6 @@ public class GifServiceTests {
     }
 
     @Nested
-    @TestInstance(Lifecycle.PER_CLASS)
     class GetRichGifUrl {
 
         @Test
@@ -43,7 +40,6 @@ public class GifServiceTests {
     }
 
     @Nested
-    @TestInstance(Lifecycle.PER_CLASS)
     class GetBrokeGifUrl {
 
         @Test

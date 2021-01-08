@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,22 +38,27 @@ public class ForexServiceTests {
         }
     }
 
-    @Test
-    void isHigherThanYesterdayShouldReturnTrueOnIncreasedRate() throws Exception {
-        setAdapterRespond(1.0, 2.0);
-        assertTrue(forex.isHigherThanYesterday(CURRENCY_TO_CHECK));
-    }
+    @Nested
+    class IsHigherThanYesterday {
 
-    @Test
-    void isHigherThanYesterdayShouldReturnFalseOnDecreasedRate() throws Exception {
-        setAdapterRespond(2.0, 1.0);
-        assertFalse(forex.isHigherThanYesterday(CURRENCY_TO_CHECK));
-    }
+        @Test
+        void returnTrueOnIncreasedRate() throws Exception {
+            setAdapterRespond(1.0, 2.0);
+            assertTrue(forex.isHigherThanYesterday(CURRENCY_TO_CHECK));
+        }
 
-    @Test
-    void isHigherThanYesterdayShouldReturnFalseOnEqualRate() throws Exception {
-        setAdapterRespond(2.0, 2.0);
-        assertFalse(forex.isHigherThanYesterday(CURRENCY_TO_CHECK));
+        @Test
+        void returnFalseOnDecreasedRate() throws Exception {
+            setAdapterRespond(2.0, 1.0);
+            assertFalse(forex.isHigherThanYesterday(CURRENCY_TO_CHECK));
+        }
+
+        @Test
+        void returnFalseOnEqualRate() throws Exception {
+            setAdapterRespond(2.0, 2.0);
+            assertFalse(forex.isHigherThanYesterday(CURRENCY_TO_CHECK));
+        }
+
     }
 
 }

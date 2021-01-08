@@ -34,6 +34,8 @@ public class AmirichControllerTests {
 
     static final String BROKE_URL = "broke";
 
+    static final String EXCEPTION_MESSAGE = "Some exception message";
+
     void setForexRespond(String currencyToCheck, Boolean isHigher) {
         try {
             Mockito.when(forex.isHigherThanYesterday(currencyToCheck))
@@ -82,43 +84,40 @@ public class AmirichControllerTests {
 
         @Test
         void containsMessageOfExceptionFromIsHigherThanYesterday() throws Exception {
-            final String exceptionMessage = "Some exception message";
-
             Mockito.when(forex.isHigherThanYesterday(CURRENCY_TO_CHECK))
-                .thenThrow(new RuntimeException(exceptionMessage));
+                .thenThrow(new RuntimeException(EXCEPTION_MESSAGE));
 
             when()
                 .get(CURRENCY_TO_CHECK)
             .then()
-                .body(containsString(exceptionMessage));
+                .statusCode(SC_OK)
+                .body(containsString(EXCEPTION_MESSAGE));
         }
 
         @Test
         void containsMessageOfExceptionFromGetBrokeGifUrl() {
-            final String exceptionMessage = "Some exception message";
-
             setForexRespond(CURRENCY_TO_CHECK, false);
             Mockito.when(gifSource.getBrokeGifUrl())
-                .thenThrow(new RuntimeException(exceptionMessage));
+                .thenThrow(new RuntimeException(EXCEPTION_MESSAGE));
 
             when()
                 .get(CURRENCY_TO_CHECK)
             .then()
-                .body(containsString(exceptionMessage));
+                .statusCode(SC_OK)
+                .body(containsString(EXCEPTION_MESSAGE));
         }
 
         @Test
         void containsMessageOfExceptionFromGetRichGifUrl() {
-            final String exceptionMessage = "Some exception message";
-
             setForexRespond(CURRENCY_TO_CHECK, true);
             Mockito.when(gifSource.getRichGifUrl())
-                .thenThrow(new RuntimeException(exceptionMessage));
+                .thenThrow(new RuntimeException(EXCEPTION_MESSAGE));
 
             when()
                 .get(CURRENCY_TO_CHECK)
             .then()
-                .body(containsString(exceptionMessage));
+                .statusCode(SC_OK)
+                .body(containsString(EXCEPTION_MESSAGE));
         }
 
     }

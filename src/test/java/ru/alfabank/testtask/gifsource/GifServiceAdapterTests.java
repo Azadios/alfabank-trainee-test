@@ -9,8 +9,6 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +49,6 @@ public class GifServiceAdapterTests {
     }
 
     @Nested
-    @TestInstance(Lifecycle.PER_CLASS)
     class GetRichGifUrl {
 
         final String tag = "rich";
@@ -71,7 +68,6 @@ public class GifServiceAdapterTests {
     }
 
     @Nested
-    @TestInstance(Lifecycle.PER_CLASS)
     class GetBrokeGifUrl {
 
         final String tag = "broke";
