@@ -39,5 +39,6 @@ dependencyManagement {
 }
 
 test {
+	forkEvery = 1
 	useJUnitPlatform()
 }
