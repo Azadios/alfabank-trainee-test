@@ -30,7 +30,6 @@ public class ForexServiceAdapter {
         try {
             ratesJson = forexProxy.getRateAndBaseAtDateAsJson(
                 currencyToCheck, date.toString());
-
         }
         catch (Exception e) {
             throw new BadResultFromForex();
