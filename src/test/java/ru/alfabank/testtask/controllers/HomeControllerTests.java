@@ -1,4 +1,4 @@
-package ru.alfabank.testtask;
+package ru.alfabank.testtask.controllers;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

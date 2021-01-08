@@ -1,4 +1,4 @@
-package ru.alfabank.testtask;
+package ru.alfabank.testtask.gifsource;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
