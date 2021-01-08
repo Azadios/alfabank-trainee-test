@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import ru.alfabank.testtask.services.forex.ForexException.BadResultFromForex;
+import ru.alfabank.testtask.services.forex.ForexException.BadCurrencyCode;
+import ru.alfabank.testtask.services.forex.ForexException.BadDate;;
+
 @Component
 public class ForexServiceAdapter {
 
@@ -18,29 +22,34 @@ public class ForexServiceAdapter {
     @Autowired
     private ForexServiceProxy forexProxy;
 
-    public Double getRateAt(String currencyToCheck, LocalDate date) throws Exception {
-        if (date.isAfter(LocalDate.now())) {
-            throw new ForexException.BadDate("Sorry, can't predict currencies");
+    public Double getRateAt(String currencyToCheck, LocalDate date) {
+        if (date.isAfter(LocalDate.now()))
+            throw new BadDate("Sorry, can't predict currencies");
+
+        try {
+            String ratesJson = forexProxy.getRateAndBaseAtDateAsJson(
+                currencyToCheck, date.toString());
+
+            return getRateFromNode(getRatesNode(ratesJson), currencyToCheck);
         }
-
-        String ratesJson = forexProxy.getRateAndBaseAtDateAsJson(currencyToCheck, date.toString());
-
-        return getRateFromNode(getRatesNode(ratesJson), currencyToCheck);
+        catch (Exception e) {
+            throw new BadResultFromForex();
+        }
     }
 
     private Double getRateFromNode(JsonNode ratesNode, String currencyToCheck)
-            throws ForexException.BadCurrencyCode {
+            throws BadCurrencyCode {
         JsonNode currencyToCheckNode = ratesNode.path(currencyToCheck);
         JsonNode baseCurrencyNode = ratesNode.path(env.getProperty("services.forex.base_currency"));
 
         if (currencyToCheckNode.isMissingNode())
-            throw new ForexException.BadCurrencyCode("Bad requested currency code");
+            throw new BadCurrencyCode("Bad requested currency code");
 
         return currencyToCheckNode.asDouble() / baseCurrencyNode.asDouble();
     }
 
     private JsonNode getRatesNode(String ratesJson)
-            throws ForexException.BadResultFromForex {
+            throws BadResultFromForex {
         try {
             JsonNode ratesNode = new ObjectMapper().readTree(ratesJson).path("rates");
             if (ratesNode.isMissingNode())
@@ -49,9 +58,7 @@ public class ForexServiceAdapter {
             return ratesNode;
         }
         catch (Exception e) {
-            var exception = new ForexException.BadResultFromForex("There's issue with forex service, sorry");
-            exception.setStackTrace(e.getStackTrace());
-            throw exception;
+            throw new BadResultFromForex();
         }
     }
 

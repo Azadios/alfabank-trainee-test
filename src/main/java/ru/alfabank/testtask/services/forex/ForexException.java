@@ -26,6 +26,10 @@ public class ForexException {
         public BadResultFromForex(String message) {
             super(message);
         }
+
+        public BadResultFromForex() {
+            super("Sorry, there's issue with forex service");
+        }
     }
 
 }
