@@ -33,6 +33,5 @@ dependencyManagement {
 }
 
 test {
-	exclude 'ru/alfabank/testtask/controllers/**'
 	useJUnitPlatform()
 }
