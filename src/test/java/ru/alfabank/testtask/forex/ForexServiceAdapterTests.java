@@ -52,7 +52,7 @@ public class ForexServiceAdapterTests {
 
     private void setProxyRespond(String currency, LocalDate day, String response) {
         try {
-            Mockito.when(serviceProxy.getRateAndBaseAtDateAsJson(currency, DAY.toString()))
+            Mockito.when(serviceProxy.getRateAndBaseAtDateAsJson(currency, day.toString()))
                 .thenReturn(response);
         }
         catch (Exception e) {
@@ -64,7 +64,7 @@ public class ForexServiceAdapterTests {
     class GetRateAt {
 
         @Test
-        void returnCorrectRate() throws Exception {
+        void returnCorrectRate() {
             setProxyRespond(CURRENCY_TO_CHECK, DAY, jsonWithRates);
             assertEquals(CURRENCY_RATE, forexAdapter.getRateAt(CURRENCY_TO_CHECK, DAY));
         }

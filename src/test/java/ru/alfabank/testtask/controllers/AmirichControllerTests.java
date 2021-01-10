@@ -30,9 +30,9 @@ public class AmirichControllerTests {
 
     static final String CURRENCY_TO_CHECK = "USD";
 
-    static final String RICH_URL = "rich";
+    static final String RICH_URL = "rich_url";
 
-    static final String BROKE_URL = "broke";
+    static final String BROKE_URL = "broke_url";
 
     static final String EXCEPTION_MESSAGE = "Some exception message";
 
@@ -61,7 +61,7 @@ public class AmirichControllerTests {
     class GetRequest {
 
         @Test
-        void returnBrokeUrlOnIncreasedRate() {
+        void returnRichUrlOnIncreasedRate() {
             setForexRespond(CURRENCY_TO_CHECK, true);
 
             when()
