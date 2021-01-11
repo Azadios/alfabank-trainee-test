@@ -9,11 +9,11 @@ public class GifService {
     @Autowired
     GifServiceAdapter adapter;
 
-    public String getRichGifUrl() {
+    public String getRichGifUrl() throws GifServiceException {
         return adapter.getRichGifUrl();
     }
 
-    public String getBrokeGifUrl() {
+    public String getBrokeGifUrl() throws GifServiceException {
         return adapter.getBrokeGifUrl();
     }
 

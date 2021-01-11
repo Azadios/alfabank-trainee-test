@@ -17,20 +17,20 @@ public class GifServiceAdapter {
         return getFixedHeightGifUrl(jsonWithGif);
     }
 
-    public String getBrokeGifUrl() {
+    public String getBrokeGifUrl() throws GifServiceException {
         String jsonWithGif = proxy.getJsonWithRandomGifByTag("broke");
 
         return getFixedHeightGifUrl(jsonWithGif);
     }
 
-    private String getFixedHeightGifUrl(String jsonWithGif) {
+    private String getFixedHeightGifUrl(String jsonWithGif) throws GifServiceException {
         try {
             return new ObjectMapper().readTree(jsonWithGif)
                 .path("data").path("images").path("fixed_height").path("url")
                 .asText();
         }
         catch (Exception e) {
-            throw new GifServiceException();
+            throw new GifServiceException(e);
         }
     }
 

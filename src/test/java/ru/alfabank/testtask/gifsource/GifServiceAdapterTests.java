@@ -54,7 +54,7 @@ public class GifServiceAdapterTests {
         final String tag = "rich";
 
         @Test
-        void returnNotBlankOnCorrectJson() {
+        void returnNotBlankOnCorrectJson() throws GifServiceException {
             setProxyRespond(tag, CORRECT_JSON);
             assertFalse(adapter.getRichGifUrl().isBlank());
         }
@@ -73,7 +73,7 @@ public class GifServiceAdapterTests {
         final String tag = "broke";
 
         @Test
-        void returnNotBlankOnCorrectJson() {
+        void returnNotBlankOnCorrectJson() throws GifServiceException {
             setProxyRespond(tag, CORRECT_JSON);
             assertFalse(adapter.getBrokeGifUrl().isBlank());
         }

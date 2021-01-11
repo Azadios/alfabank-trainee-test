@@ -22,7 +22,7 @@ public class ForexServiceAdapter {
     @Autowired
     private ForexServiceProxy forexProxy;
 
-    public Double getRateAt(String currencyToCheck, LocalDate date) {
+    public Double getRateAt(String currencyToCheck, LocalDate date) throws ForexException {
         if (date.isAfter(LocalDate.now()))
             throw new BadDate("Sorry, can't predict currencies");
 
@@ -32,7 +32,7 @@ public class ForexServiceAdapter {
                 currencyToCheck, date.toString());
         }
         catch (Exception e) {
-            throw new BadResultFromForex();
+            throw new BadResultFromForex(e);
         }
 
         return getRateFromNode(getRatesNode(ratesJson), currencyToCheck);
@@ -54,12 +54,12 @@ public class ForexServiceAdapter {
         try {
             JsonNode ratesNode = new ObjectMapper().readTree(ratesJson).path("rates");
             if (ratesNode.isMissingNode())
-                throw new Exception();
+                throw new BadResultFromForex("There's no \"rates\" node");
 
             return ratesNode;
         }
         catch (Exception e) {
-            throw new BadResultFromForex();
+            throw new BadResultFromForex(e);
         }
     }
 

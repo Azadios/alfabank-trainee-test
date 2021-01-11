@@ -64,7 +64,7 @@ public class ForexServiceAdapterTests {
     class GetRateAt {
 
         @Test
-        void returnCorrectRate() {
+        void returnCorrectRate() throws ForexException {
             setProxyRespond(CURRENCY_TO_CHECK, DAY, jsonWithRates);
             assertEquals(CURRENCY_RATE, forexAdapter.getRateAt(CURRENCY_TO_CHECK, DAY));
         }

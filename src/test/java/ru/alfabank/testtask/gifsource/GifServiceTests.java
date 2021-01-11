@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ru.alfabank.testtask.services.gifsource.GifService;
 import ru.alfabank.testtask.services.gifsource.GifServiceAdapter;
+import ru.alfabank.testtask.services.gifsource.GifServiceException;
 
 @SpringBootTest
 public class GifServiceTests {
@@ -23,7 +24,7 @@ public class GifServiceTests {
 
     static final String CORRECT_URL = "https://media.giphy.com/media/LdOyjZ7io5Msw/giphy.gif";
 
-    void setAdapterRespond(String url) {
+    void setAdapterRespond(String url) throws GifServiceException {
         Mockito.when(adapter.getRichGifUrl()).thenReturn(url);
         Mockito.when(adapter.getBrokeGifUrl()).thenReturn(url);
     }
@@ -32,7 +33,7 @@ public class GifServiceTests {
     class GetRichGifUrl {
 
         @Test
-        void returnNotBlankOnCorrectUrl() {
+        void returnNotBlankOnCorrectUrl() throws GifServiceException {
             setAdapterRespond(CORRECT_URL);
             assertFalse(service.getRichGifUrl().isBlank());
         }
@@ -43,7 +44,7 @@ public class GifServiceTests {
     class GetBrokeGifUrl {
 
         @Test
-        void returnNotBlankOnCorrectUrl() {
+        void returnNotBlankOnCorrectUrl() throws GifServiceException {
             setAdapterRespond(CORRECT_URL);
             assertFalse(service.getBrokeGifUrl().isBlank());
         }

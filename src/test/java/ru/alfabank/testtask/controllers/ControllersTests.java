@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import io.restassured.RestAssured;
 import ru.alfabank.testtask.services.forex.ForexService;
 import ru.alfabank.testtask.services.gifsource.GifService;
+import ru.alfabank.testtask.services.gifsource.GifServiceException;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -99,7 +100,7 @@ public class ControllersTests {
         }
 
         @BeforeEach
-        void setGifSourceRespond() {
+        void setGifSourceRespond() throws GifServiceException {
             Mockito.when(gifSource.getBrokeGifUrl())
                 .thenReturn(BROKE_URL);
             Mockito.when(gifSource.getRichGifUrl())
@@ -144,7 +145,7 @@ public class ControllersTests {
             }
 
             @Test
-            void containsMessageOfExceptionFromGetBrokeGifUrl() {
+            void containsMessageOfExceptionFromGetBrokeGifUrl() throws GifServiceException {
                 setForexRespond(CURRENCY_TO_CHECK, false);
                 Mockito.when(gifSource.getBrokeGifUrl())
                     .thenThrow(new RuntimeException(EXCEPTION_MESSAGE));
@@ -157,7 +158,7 @@ public class ControllersTests {
             }
 
             @Test
-            void containsMessageOfExceptionFromGetRichGifUrl() {
+            void containsMessageOfExceptionFromGetRichGifUrl() throws GifServiceException {
                 setForexRespond(CURRENCY_TO_CHECK, true);
                 Mockito.when(gifSource.getRichGifUrl())
                     .thenThrow(new RuntimeException(EXCEPTION_MESSAGE));

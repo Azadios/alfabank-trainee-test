@@ -1,34 +1,60 @@
 package ru.alfabank.testtask.services.forex;
 
-public class ForexException {
+public class ForexException extends Exception {
 
-    private ForexException() {};
+    static final long serialVersionUID = 1L;
 
-    public static class BadDate extends RuntimeException {
+    private ForexException(String message) {
+        super(message);
+    };
+
+    private ForexException(String message, Throwable cause) {
+        super(message, cause);
+    };
+
+    public static class BadDate extends ForexException {
         static final long serialVersionUID = 1L;
 
         public BadDate(String message) {
             super(message);
         }
+
+        public BadDate(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
-    public static class BadCurrencyCode extends RuntimeException {
+    public static class BadCurrencyCode extends ForexException {
         static final long serialVersionUID = 1L;
 
         public BadCurrencyCode(String message) {
             super(message);
         }
+
+        public BadCurrencyCode(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
-    public static class BadResultFromForex extends RuntimeException {
+    public static class BadResultFromForex extends ForexException {
         static final long serialVersionUID = 1L;
+
+        static final String STD_MESSAGE = "Sorry, there's issue with forex service";
 
         public BadResultFromForex(String message) {
             super(message);
         }
 
+        public BadResultFromForex(String message, Throwable cause) {
+            super(message, cause);
+        }
+
         public BadResultFromForex() {
-            super("Sorry, there's issue with forex service");
+            super(STD_MESSAGE);
+        }
+
+        public BadResultFromForex(Throwable cause) {
+            super(STD_MESSAGE, cause);
         }
     }
 

@@ -11,7 +11,7 @@ public class ForexService {
     @Autowired
     ForexServiceAdapter adapter;
 
-    public Boolean isHigherThanYesterday(String currencyToCheck) {
+    public Boolean isHigherThanYesterday(String currencyToCheck) throws ForexException {
         Double todayRate = adapter.getRateAt(currencyToCheck, LocalDate.now());
         Double yesterdayRate = adapter.getRateAt(currencyToCheck, LocalDate.now().minusDays(1));
 
